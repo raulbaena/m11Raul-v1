@@ -50,10 +50,10 @@ USER pere
 +OK User name accepted, password please
 PASS pere
 +OK Mailbox open, 0 messages
-RATR 1
--ERR Unknown TRANSACTION state command
-RETR 1
--ERR No such message
+STAT
++OK 0 0
+LIST
++OK Mailbox scan listing follows
 ```
 
 Ara comprovarem que el nostre servidor de correu també funcioa per pop3s. No utilitzarem telnet, sino que utilitzaremo openssl. En aquest cas marta ha de ser capaç de connectar-se al servidor de correu mitjançant el port 995. Per poguer fer-ho executarem la seguent comanda.
@@ -80,6 +80,11 @@ USER marta
 +OK User name accepted, password please
 PASS marta
 +OK Mailbox open, 0 messages
+STAT
++OK 0 0
+LIST
++OK Mailbox scan listing follows
+
 ```
 
 ## Ordres docker
