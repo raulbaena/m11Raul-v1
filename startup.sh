@@ -4,3 +4,5 @@
 # -------------------------------------
 /opt/docker/install.sh && echo "Tot instalat"
 /usr/sbin/xinetd -dontfork && echo "Correu en marxa"
+/opt/docker/sendmail.sh && echo "Mails enviats"
+

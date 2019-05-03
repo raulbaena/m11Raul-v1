@@ -9,9 +9,10 @@ popnet --> Xarxa on estará el nostre servidor de correu
 raulbaena/m11raul:v1 --> Servidor de correu pop3 y pop3. Amb l'usuari pere i l'usuaria marta.
 
 
-#Implementació
+#Implementació (Configuracio maquina amazon)
 
-Dintre de amazon obrim els ports 995 i 110.
+Primer de tot obrim els ports 995 i 110 de la nostra maquina de amazon, pero fer-ho anem a Description --> launch-wizard-11 --> Inboud --> Edit y alla posem  els ports que volem obrir.
+
 Ens trobem en la nostra maquina de amazon, lo primer que farem será crear la xarxa on estara situat el nostre servidor de correu. En aquest cas s'anomenará "popnet". Per poder crear aquesta xarxa executarem la seguent comanda:
 ```
 docker network create popnet
@@ -72,11 +73,30 @@ Certificate chain
 
 +OK POP3 popserver 2007f.104 server ready
 ```
-Ara iniciem sessió com a marta i comprovem el funcionament del nostre servidore de correu.
+Ara iniciem sessió com a marta i comprovem el funcionament del nostre servidore de correu. En aquest cas marta no te cap correu que llegir
 ```
 +OK POP3 popserver 2007f.104 server ready
 USER marta
 +OK User name accepted, password please
 PASS marta
 +OK Mailbox open, 0 messages
+```
+
+#Ordres docker
+
+Creacio de imatge:
+```
+docker build -t raulbaena/m11raul:v1 .
+```
+Pujada de imatge:
+```
+docker push raulbaena/m11raul:v1
+```
+Descarregar imatge:
+```
+docker pull raulbaena/m11raul:v1
+```
+Execucio de containet:
+```
+ docker run --rm --name popserver -h popserver -p 110:110 -p 995:995 --network popnet -d raulbaena/m11raul:v1
 ```
