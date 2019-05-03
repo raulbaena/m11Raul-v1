@@ -1,6 +1,6 @@
-#Documentacio POP3 y POP3S
+# Documentacio POP3 y POP3S
 
-#Arquitectura
+## Arquitectura
 
 Disposem de un servidor de correu que funciona amb els protocols pop3 (port 110) i pop3s (port 995). Aquest servidor estará localitzat en la nostra maquina de amazon AWS en una xarxa anomenada "popnet".
 
@@ -9,7 +9,7 @@ popnet --> Xarxa on estará el nostre servidor de correu
 raulbaena/m11raul:v1 --> Servidor de correu pop3 y pop3. Amb l'usuari pere i l'usuaria marta.
 
 
-#Implementació (Configuracio maquina amazon)
+## Implementació (Configuracio maquina amazon)
 
 Primer de tot obrim els ports 995 i 110 de la nostra maquina de amazon, pero fer-ho anem a Description --> launch-wizard-11 --> Inboud --> Edit y alla posem  els ports que volem obrir.
 
@@ -37,7 +37,7 @@ PORT    STATE SERVICE
 ```
 
 
-#Troubleshooting
+## Troubleshooting
 
 Farem la primera comprobació del funcionament del nostre servidor de correu. Ens situem en el nostre host del aula i ens dispondrem a connectarnos al notre servidor de correu mitjançant telnet. En aquesta proba utilitzarem el famos usuari "pere" amb el qual ens conectarem al servidor desde el host del aula. En aquest cas pere no te cap missatge per llegir
 ```
@@ -82,7 +82,7 @@ PASS marta
 +OK Mailbox open, 0 messages
 ```
 
-#Ordres docker
+## Ordres docker
 
 Creacio de imatge:
 ```
