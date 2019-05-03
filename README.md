@@ -2,7 +2,7 @@
 
 #Arquitectura
 
-Disposem de un servidor de correu que funcionan amb els protocols pop3 (port 110) i pop3s (995). Aquest servidor estará localitzat en la nostra maquina de amazon AWS en una xarxa anomenada popnet.
+Disposem de un servidor de correu que funciona amb els protocols pop3 (port 110) i pop3s (port 995). Aquest servidor estará localitzat en la nostra maquina de amazon AWS en una xarxa anomenada "popnet".
 
 popnet --> Xarxa on estará el nostre servidor de correu
 
@@ -12,11 +12,11 @@ raulbaena/m11raul:v1 --> Servidor de correu pop3 y pop3. Amb l'usuari pere i l'u
 #Implementació
 
 Dintre de amazon obrim els ports 995 i 110.
-Ens trobem en la nostra maquina de amazon, lo primer que farem será la xarxa on estara situat el nostre servidor de correu. En aquest cas s'anomenará "popnet". Per poder crear aquesta xarxa executarem la seguent comanda:
+Ens trobem en la nostra maquina de amazon, lo primer que farem será crear la xarxa on estara situat el nostre servidor de correu. En aquest cas s'anomenará "popnet". Per poder crear aquesta xarxa executarem la seguent comanda:
 ```
 docker network create popnet
 ```
-Un cop creada la nostra xarxa ens dispondrem a descarregar el nostre servidor de correu. El nostre correu s'anomenará "popserver". Per executar-lo fem la següent comanda:
+Un cop creada la nostra xarxa ens dispondrem a descarregar el nostre servidor de correu. El nostre servidor de correu s'anomenará "popserver". Per executar-lo fem la següent comanda:
 ```
  docker run --rm --name popserver -h popserver -p 110:110 -p 995:995 --network popnet -d raulbaena/m11raul:v1
 ```
@@ -53,4 +53,30 @@ RATR 1
 -ERR Unknown TRANSACTION state command
 RETR 1
 -ERR No such message
+```
+
+Ara comprovarem que el nostre servidor de correu també funcioa per pop3s. No utilitzarem telnet, sino que utilitzaremo openssl. En aquest cas marta ha de ser capaç de connectar-se al servidor de correu mitjançant el port 995. Per poguer fer-ho executarem la seguent comanda.
+```
+[isx53320159@i12 m11Raul-v1]$ openssl s_client -connect 18.130.46.1:995
+CONNECTED(00000003)
+depth=0 C = --, ST = SomeState, L = SomeCity, O = SomeOrganization, OU = SomeOrganizationalUnit, CN = localhost.localdomain, emailAddress = root@localhost.localdomain
+verify error:num=18:self signed certificate
+verify return:1
+depth=0 C = --, ST = SomeState, L = SomeCity, O = SomeOrganization, OU = SomeOrganizationalUnit, CN = localhost.localdomain, emailAddress = root@localhost.localdomain
+verify return:1
+---
+Certificate chain
+ 0 s:/C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=localhost.localdomain/emailAddress=root@localhost.localdomain
+   i:/C=--/ST=SomeState/L=SomeCity/O=SomeOrganization/OU=SomeOrganizationalUnit/CN=localhost.localdomain/emailAddress=root@localhost.localdomain
+... (mes xixa que surt)
+
++OK POP3 popserver 2007f.104 server ready
+```
+Ara iniciem sessió com a marta i comprovem el funcionament del nostre servidore de correu.
+```
++OK POP3 popserver 2007f.104 server ready
+USER marta
++OK User name accepted, password please
+PASS marta
++OK Mailbox open, 0 messages
 ```
